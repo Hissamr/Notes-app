@@ -1,0 +1,217 @@
+.folders-list {
+  background: white;
+  border-radius: 10px;
+  padding: 1.5rem;
+}
+
+.folders-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid #eee;
+}
+
+.folders-header h3 {
+  color: #333;
+  font-size: 1.1rem;
+  margin: 0;
+}
+
+.btn-small {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.btn-small:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+}
+
+.error-message {
+  background: #ffebee;
+  color: #c62828;
+  padding: 0.75rem;
+  border-radius: 6px;
+  margin-bottom: 1rem;
+  border-left: 4px solid #f44336;
+}
+
+.folder-form {
+  margin-bottom: 1rem;
+  padding: 1rem;
+  background: #f9f9f9;
+  border-radius: 6px;
+  border: 2px dashed #ddd;
+}
+
+.folder-form input {
+  width: 100%;
+  padding: 0.6rem;
+  border: 2px solid #e0e0e0;
+  border-radius: 6px;
+  margin-bottom: 0.8rem;
+  font-size: 0.95rem;
+}
+
+.folder-form input:focus {
+  outline: none;
+  border-color: #667eea;
+}
+
+.folder-form .form-actions {
+  display: flex;
+  gap: 0.8rem;
+}
+
+.folder-form button {
+  flex: 1;
+  padding: 0.6rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.folder-form button[type="submit"] {
+  background: #4caf50;
+  color: white;
+}
+
+.folder-form button[type="submit"]:hover:not(:disabled) {
+  background: #388e3c;
+}
+
+.folder-form button[type="button"] {
+  background: #e0e0e0;
+  color: #333;
+}
+
+.folder-form button[type="button"]:hover {
+  background: #d0d0d0;
+}
+
+.folders-items {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.folder-item {
+  padding: 0.8rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  user-select: none;
+  border: 2px solid transparent;
+}
+
+.folder-item:hover {
+  background: #f5f5f5;
+  border-color: #667eea;
+}
+
+.folder-item.active {
+  background: linear-gradient(135deg, #e3f2fd 0%, #f3e5f5 100%);
+  color: #667eea;
+  font-weight: 600;
+  border-color: #667eea;
+}
+
+.folder-item-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.folder-edit-form {
+  display: flex;
+  gap: 0.6rem;
+  padding: 0.8rem;
+  background: #f9f9f9;
+  border-radius: 6px;
+}
+
+.folder-edit-form input {
+  flex: 1;
+  padding: 0.6rem;
+  border: 2px solid #ddd;
+  border-radius: 4px;
+  font-size: 0.9rem;
+}
+
+.folder-edit-form input:focus {
+  outline: none;
+  border-color: #667eea;
+}
+
+.folder-edit-form button {
+  padding: 0.6rem 1rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.folder-edit-form button[type="submit"] {
+  background: #4caf50;
+  color: white;
+}
+
+.folder-edit-form button[type="button"] {
+  background: #e0e0e0;
+  color: #333;
+}
+
+.folder-actions {
+  display: flex;
+  gap: 0.4rem;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.folder-item:hover .folder-actions {
+  opacity: 1;
+}
+
+.btn-icon {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+  padding: 0.25rem;
+  transition: all 0.2s ease;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+}
+
+.btn-icon:hover {
+  background: rgba(0,0,0,0.1);
+  transform: scale(1.15);
+}
+
+.empty-message {
+  text-align: center;
+  color: #999;
+  font-style: italic;
+  padding: 1rem;
+  margin: 0;
+}
