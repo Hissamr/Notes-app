@@ -7,8 +7,8 @@ import './ParentDashboard.css';
 function ParentDashboard() {
   const { user } = useAuth();
   const [childUsername, setChildUsername] = useState('');
-  const [selectedChild, setSelectedChild] = useState(null);
-  const [childNotes, setChildNotes] = useState([]);
+  const [linkedChildren, setLinkedChildren] = useState([]);
+  const [childrenNotes, setChildrenNotes] = useState({});
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState('');
@@ -16,6 +16,38 @@ function ParentDashboard() {
   if (user && user.role === 'CHILD') {
     return <Navigate to="/dashboard" />;
   }
+
+  React.useEffect(() => {
+    fetchLinkedChildren();
+  }, []);
+
+  const fetchLinkedChildren = async () => {
+    setLoading(true);
+    setError('');
+    try {
+      const response = await authAPI.getLinkedChildren();
+      setLinkedChildren(response.data);
+      
+      // Fetch notes for each child
+      const notesPromises = response.data.map(child => 
+        notesAPI.getChildNotes(child.id)
+          .then(res => ({ childId: child.id, notes: res.data }))
+          .catch(() => ({ childId: child.id, notes: [] }))
+      );
+      
+      const allNotes = await Promise.all(notesPromises);
+      const notesMap = {};
+      allNotes.forEach(({ childId, notes }) => {
+        notesMap[childId] = notes;
+      });
+      setChildrenNotes(notesMap);
+    } catch (error) {
+      setError('Failed to fetch linked children');
+      console.error('Failed to fetch linked children:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const handleLinkChild = async (e) => {
     e.preventDefault();
@@ -28,22 +60,10 @@ function ParentDashboard() {
       setChildUsername('');
       setMessage('Child linked successfully!');
       setTimeout(() => setMessage(''), 3000);
+      // Refresh the children list
+      fetchLinkedChildren();
     } catch (error) {
       setError(error.response?.data?.message || 'Failed to link child');
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const fetchChildNotes = async (childId) => {
-    setLoading(true);
-    setError('');
-    try {
-      const response = await notesAPI.getChildNotes(childId);
-      setChildNotes(response.data);
-    } catch (error) {
-      setError('Failed to fetch child notes');
-      console.error('Failed to fetch child notes:', error);
     } finally {
       setLoading(false);
     }
@@ -84,87 +104,77 @@ function ParentDashboard() {
       </div>
 
       <div className="children-section">
-        <h2>View Child's Notes</h2>
-        <p className="info-text">
-          Enter the Child ID to view their notes. Ask your child for their ID number.
-        </p>
+        <h2>Linked Children & Their Notes</h2>
         
-        <div className="child-selector">
-          <input
-            type="number"
-            placeholder="Enter child ID"
-            onChange={(e) => {
-              const childId = parseInt(e.target.value);
-              if (childId) {
-                setSelectedChild(childId);
-                fetchChildNotes(childId);
-              }
-            }}
-          />
-        </div>
-
-        {selectedChild && (
-          <div className="child-notes-section">
-            <h3>Child's Notes (ID: {selectedChild})</h3>
-            
-            {loading ? (
-              <p>Loading notes...</p>
-            ) : childNotes.length === 0 ? (
-              <div className="empty-state">
-                <p>This child has no notes yet.</p>
-              </div>
-            ) : (
-              <div className="notes-grid">
-                {childNotes.map(note => (
-                  <div 
-                    key={note.id} 
-                    className={`note-item ${note.noteType} ${note.completed ? 'completed' : ''}`}
-                  >
-                    <div className="note-header">
-                      {note.noteType === 'CHECKBOX' && (
-                        <input
-                          type="checkbox"
-                          checked={note.completed}
-                          disabled
-                          className="note-checkbox"
-                        />
-                      )}
-                      <h4 className={note.completed ? 'completed-text' : ''}>
-                        {note.title}
-                      </h4>
-                    </div>
-                    
-                    {note.content && (
-                      <p className={`note-content ${note.completed ? 'completed-text' : ''}`}>
-                        {note.content}
-                      </p>
-                    )}
-
-                    {note.tags && formatTags(note.tags).length > 0 && (
-                      <div className="note-tags">
-                        {formatTags(note.tags).map((tag, index) => (
-                          <span key={index} className="tag">{tag}</span>
-                        ))}
-                      </div>
-                    )}
-
-                    <div className="note-meta">
-                      <small>
-                        Created: {new Date(note.createdAt).toLocaleDateString()}
-                        {note.updatedAt && note.updatedAt !== note.createdAt && (
-                          <> • Updated: {new Date(note.updatedAt).toLocaleDateString()}</>
-                        )}
-                      </small>
-                    </div>
-
-                    <div className="read-only-badge">
-                      👁️ Read Only
-                    </div>
-                  </div>
-                ))}
-              </div>
-            )}
+        {loading ? (
+          <p>Loading children and notes...</p>
+        ) : linkedChildren.length === 0 ? (
+          <div className="empty-state">
+            <p>No linked children yet. Link a child account above to view their notes.</p>
           </div>
+        ) : (
+          linkedChildren.map(child => (
+            <div key={child.id} className="child-notes-section">
+              <h3>📝 {child.username}'s Notes</h3>
+              <p className="child-info">Email: {child.email}</p>
+              
+              {childrenNotes[child.id] && childrenNotes[child.id].length === 0 ? (
+                <div className="empty-state">
+                  <p>This child has no notes yet.</p>
+                </div>
+              ) : (
+                <div className="notes-grid">
+                  {(childrenNotes[child.id] || []).map(note => (
+                    <div 
+                      key={note.id} 
+                      className={`note-item ${note.noteType} ${note.completed ? 'completed' : ''}`}
+                    >
+                      <div className="note-header">
+                        {note.noteType === 'CHECKBOX' && (
+                          <input
+                            type="checkbox"
+                            checked={note.completed}
+                            disabled
+                            className="note-checkbox"
+                          />
+                        )}
+                        <h4 className={note.completed ? 'completed-text' : ''}>
+                          {note.title}
+                        </h4>
+                      </div>
+                      
+                      {note.content && (
+                        <p className={`note-content ${note.completed ? 'completed-text' : ''}`}>
+                          {note.content}
+                        </p>
+                      )}
+
+                      {note.tags && formatTags(note.tags).length > 0 && (
+                        <div className="note-tags">
+                          {formatTags(note.tags).map((tag, index) => (
+                            <span key={index} className="tag">{tag}</span>
+                          ))}
+                        </div>
+                      )}
+
+                      <div className="note-meta">
+                        <small>
+                          Created: {new Date(note.createdAt).toLocaleDateString()}
+                          {note.updatedAt && note.updatedAt !== note.createdAt && (
+                            <> • Updated: {new Date(note.updatedAt).toLocaleDateString()}</>
+                          )}
+                        </small>
+                      </div>
+
+                      <div className="read-only-badge">
+                        👁️ Read Only
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          ))
         )}
       </div>
     </div>

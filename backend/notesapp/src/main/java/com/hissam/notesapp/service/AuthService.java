@@ -107,6 +107,20 @@ public class AuthService {
         return mapToUserResponse(user);
     }
     
+    public java.util.List<ChildResponse> getLinkedChildren(String parentUsername) {
+        User parent = userRepository.findByUsername(parentUsername)
+                .orElseThrow(() -> new ResourceNotFoundException("Parent not found"));
+        
+        if (parent.getRole() != UserRole.PARENT) {
+            throw new RuntimeException("User is not a parent");
+        }
+        
+        return childRepository.findByParentId(parent.getId())
+                .stream()
+                .map(this::mapToChildResponse)
+                .collect(java.util.stream.Collectors.toList());
+    }
+    
     private UserResponse mapToUserResponse(User user) {
         return UserResponse.builder()
                 .id(user.getId())
@@ -114,6 +128,15 @@ public class AuthService {
                 .email(user.getEmail())
                 .role(user.getRole())
                 .createdAt(user.getCreatedAt())
+                .build();
+    }
+    
+    private ChildResponse mapToChildResponse(Child child) {
+        return ChildResponse.builder()
+                .id(child.getId())
+                .userId(child.getUser().getId())
+                .username(child.getUser().getUsername())
+                .email(child.getUser().getEmail())
                 .build();
     }
 }

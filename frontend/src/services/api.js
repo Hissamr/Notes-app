@@ -55,7 +55,8 @@ export const authAPI = {
   login: (credentials) => api.post('/auth/login', credentials),
   register: (userData) => api.post('/auth/register', userData),
   getMe: () => api.get('/auth/me'),
-  linkChild: (childUsername) => api.post('/auth/link-child', { childUsername: childUsername })
+  linkChild: (childUsername) => api.post('/auth/link-child', { childUsername: childUsername }),
+  getLinkedChildren: () => api.get('/auth/children')
 };
 
 export default api;

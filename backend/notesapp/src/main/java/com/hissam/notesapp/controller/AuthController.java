@@ -45,4 +45,10 @@ public class AuthController {
         UserResponse response = authService.getCurrentUser(authentication.getName());
         return ResponseEntity.ok(response);
     }
+    
+    @GetMapping("/children")
+    public ResponseEntity<java.util.List<ChildResponse>> getLinkedChildren(Authentication authentication) {
+        java.util.List<ChildResponse> children = authService.getLinkedChildren(authentication.getName());
+        return ResponseEntity.ok(children);
+    }
 }
