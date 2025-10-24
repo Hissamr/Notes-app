@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { notesAPI } from '../services/api';
+import { notesAPI } from '../services/api.jsx';
 import './NoteItem.css';
 
 function NoteItem({ note, onEdit, onDeleted }) {

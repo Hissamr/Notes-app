@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { useAuth } from '../contexts/AuthContext';
+import { useAuth } from '../contexts/AuthContext.jsx';
 import { Navigate } from 'react-router-dom';
-import { authAPI, notesAPI } from '../services/api';
+import { authAPI, notesAPI } from '../services/api.jsx';
 import './ParentDashboard.css';
 
 function ParentDashboard() {
