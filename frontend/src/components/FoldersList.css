@@ -20,7 +20,7 @@
 }
 
 .btn-small {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: #1a1a1a;
   color: white;
   border: none;
   padding: 0.5rem 1rem;
@@ -28,21 +28,20 @@
   cursor: pointer;
   font-size: 0.9rem;
   font-weight: 600;
-  transition: all 0.3s ease;
+  transition: all 0.2s ease;
 }
 
 .btn-small:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+  background: #333;
 }
 
 .error-message {
-  background: #ffebee;
-  color: #c62828;
+  background: #fef2f2;
+  color: #991b1b;
   padding: 0.75rem;
   border-radius: 6px;
   margin-bottom: 1rem;
-  border-left: 4px solid #f44336;
+  border-left: 3px solid #dc2626;
 }
 
 .folder-form {
@@ -64,7 +63,7 @@
 
 .folder-form input:focus {
   outline: none;
-  border-color: #667eea;
+  border-color: #1a1a1a;
 }
 
 .folder-form .form-actions {
@@ -84,12 +83,12 @@
 }
 
 .folder-form button[type="submit"] {
-  background: #4caf50;
+  background: #1a1a1a;
   color: white;
 }
 
 .folder-form button[type="submit"]:hover:not(:disabled) {
-  background: #388e3c;
+  background: #333;
 }
 
 .folder-form button[type="button"] {
@@ -121,14 +120,14 @@
 
 .folder-item:hover {
   background: #f5f5f5;
-  border-color: #667eea;
+  border-color: #d0d0d0;
 }
 
 .folder-item.active {
-  background: linear-gradient(135deg, #e3f2fd 0%, #f3e5f5 100%);
-  color: #667eea;
+  background: #f5f5f5;
+  color: #1a1a1a;
   font-weight: 600;
-  border-color: #667eea;
+  border-color: #1a1a1a;
 }
 
 .folder-item-container {
@@ -154,7 +153,7 @@
 
 .folder-edit-form input:focus {
   outline: none;
-  border-color: #667eea;
+  border-color: #1a1a1a;
 }
 
 .folder-edit-form button {
@@ -168,7 +167,7 @@
 }
 
 .folder-edit-form button[type="submit"] {
-  background: #4caf50;
+  background: #1a1a1a;
   color: white;
 }
 

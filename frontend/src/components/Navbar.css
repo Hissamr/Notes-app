@@ -1,18 +1,18 @@
 .navbar {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
+  background: #ffffff;
+  color: #1a1a1a;
   padding: 1rem 2rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  border-bottom: 1px solid #e5e5e5;
 }
 
 .navbar-brand a {
-  color: white;
+  color: #1a1a1a;
   text-decoration: none;
   font-size: 1.5rem;
-  font-weight: bold;
+  font-weight: 600;
 }
 
 .navbar-menu {
@@ -24,32 +24,35 @@
 .user-info {
   font-size: 0.9rem;
   padding: 0.5rem 1rem;
-  background: rgba(255, 255, 255, 0.2);
-  border-radius: 20px;
+  background: #f5f5f5;
+  border-radius: 6px;
+  color: #666;
 }
 
 .nav-link {
-  color: white;
+  color: #666;
   text-decoration: none;
   padding: 0.5rem 1rem;
-  border-radius: 5px;
-  transition: background-color 0.3s;
+  border-radius: 6px;
+  transition: all 0.2s;
 }
 
 .nav-link:hover {
-  background: rgba(255, 255, 255, 0.2);
+  background: #f5f5f5;
+  color: #1a1a1a;
 }
 
 .logout-btn {
-  background: rgba(255, 255, 255, 0.2);
+  background: #1a1a1a;
   color: white;
   border: none;
-  padding: 0.5rem 1rem;
-  border-radius: 5px;
+  padding: 0.5rem 1.2rem;
+  border-radius: 6px;
   cursor: pointer;
-  transition: background-color 0.3s;
+  transition: all 0.2s;
+  font-weight: 500;
 }
 
 .logout-btn:hover {
-  background: rgba(255, 255, 255, 0.3);
+  background: #333;
 }

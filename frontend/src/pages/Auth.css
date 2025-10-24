@@ -50,17 +50,18 @@
 button[type="submit"] {
   width: 100%;
   padding: 0.75rem;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: #1a1a1a;
   color: white;
   border: none;
-  border-radius: 5px;
+  border-radius: 6px;
   font-size: 1rem;
   cursor: pointer;
-  transition: opacity 0.3s;
+  transition: all 0.2s;
+  font-weight: 500;
 }
 
 button[type="submit"]:hover:not(:disabled) {
-  opacity: 0.9;
+  background: #333;
 }
 
 button[type="submit"]:disabled {
@@ -84,8 +85,9 @@ button[type="submit"]:disabled {
 }
 
 .auth-card a {
-  color: #667eea;
+  color: #1a1a1a;
   text-decoration: none;
+  font-weight: 500;
 }
 
 .auth-card a:hover {

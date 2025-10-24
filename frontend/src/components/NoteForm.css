@@ -87,8 +87,7 @@
 .form-group select:focus,
 .form-group textarea:focus {
   outline: none;
-  border-color: #667eea;
-  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+  border-color: #1a1a1a;
 }
 
 .form-group textarea {
@@ -120,7 +119,7 @@
   width: 20px;
   height: 20px;
   margin: 0;
-  accent-color: #4caf50;
+  accent-color: #1a1a1a;
 }
 
 .alert {
@@ -133,15 +132,15 @@
 }
 
 .alert-error {
-  background: #ffebee;
-  color: #c62828;
-  border-left: 4px solid #f44336;
+  background: #fef2f2;
+  color: #991b1b;
+  border-left: 3px solid #dc2626;
 }
 
 .alert-success {
-  background: #e8f5e9;
-  color: #2e7d32;
-  border-left: 4px solid #4caf50;
+  background: #f0fdf4;
+  color: #166534;
+  border-left: 3px solid #22c55e;
 }
 
 .form-actions {
@@ -178,13 +177,12 @@
 }
 
 .btn-submit {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: #1a1a1a;
   color: white;
 }
 
 .btn-submit:hover:not(:disabled) {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+  background: #333;
 }
 
 .btn-submit:disabled,
