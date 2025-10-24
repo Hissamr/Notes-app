@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { notesAPI } from '../services/api';
+import { notesAPI } from '../services/api.jsx';
 import './NoteForm.css';
 
 function NoteForm({ folders, editingNote, onNoteCreated, onNoteUpdated, onCancel }) {

@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { useAuth } from '../contexts/AuthContext';
+import { useAuth } from '../contexts/AuthContext.jsx';
 import { Navigate } from 'react-router-dom';
-import NotesList from '../components/NotesList';
-import NoteForm from '../components/NoteForm';
-import FoldersList from '../components/FoldersList';
-import { notesAPI, foldersAPI } from '../services/api';
+import NotesList from '../components/NotesList.jsx';
+import NoteForm from '../components/NoteForm.jsx';
+import FoldersList from '../components/FoldersList.jsx';
+import { notesAPI, foldersAPI } from '../services/api.jsx';
 import './Dashboard.css';
 
 function Dashboard() {

@@ -1,5 +1,5 @@
 import React from 'react';
-import NoteItem from './NoteItem';
+import NoteItem from './NoteItem.jsx';
 import './NotesList.css';
 
 function NotesList({ notes, onNoteEdit, onNoteDeleted, selectedFolder }) {

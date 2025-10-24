@@ -1,18 +1,13 @@
 import React, { useState } from 'react';
-import { useAuth } from '../contexts/AuthContext';
+import { useAuth } from '../contexts/AuthContext.jsx';
 import { Link, useNavigate } from 'react-router-dom';
 import './Auth.css';
 
-function RegisterPage() {
-  const [formData, setFormData] = useState({
-    username: '',
-    email: '',
-    password: '',
-    role: 'CHILD'
-  });
+function LoginPage() {
+  const [formData, setFormData] = useState({ username: '', password: '' });
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
-  const { register } = useAuth();
+  const { login } = useAuth();
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -20,10 +15,10 @@ function RegisterPage() {
     setLoading(true);
     setError('');
 
-    const result = await register(formData);
+    const result = await login(formData.username, formData.password);
     
     if (result.success) {
-      navigate('/login');
+      navigate('/dashboard');
     } else {
       setError(result.error);
     }
@@ -37,7 +32,7 @@ function RegisterPage() {
   return (
     <div className="auth-container">
       <div className="auth-card">
-        <h2>Register</h2>
+        <h2>Login</h2>
         <form onSubmit={handleSubmit}>
           <div className="form-group">
             <label>Username:</label>
@@ -45,16 +40,6 @@ function RegisterPage() {
               type="text"
               name="username"
               value={formData.username}
-              onChange={handleChange}
-              required
-            />
-          </div>
-          <div className="form-group">
-            <label>Email:</label>
-            <input
-              type="email"
-              name="email"
-              value={formData.email}
               onChange={handleChange}
               required
             />
@@ -69,24 +54,17 @@ function RegisterPage() {
               required
             />
           </div>
-          <div className="form-group">
-            <label>Role:</label>
-            <select name="role" value={formData.role} onChange={handleChange}>
-              <option value="CHILD">Child</option>
-              <option value="PARENT">Parent</option>
-            </select>
-          </div>
           {error && <div className="error-message">{error}</div>}
           <button type="submit" disabled={loading}>
-            {loading ? 'Registering...' : 'Register'}
+            {loading ? 'Logging in...' : 'Login'}
           </button>
         </form>
         <p>
-          Already have an account? <Link to="/login">Login here</Link>
+          Don't have an account? <Link to="/register">Register here</Link>
         </p>
       </div>
     </div>
   );
 }
 
-export default RegisterPage;
+export default LoginPage;

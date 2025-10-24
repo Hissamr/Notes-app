@@ -1,11 +1,11 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import { AuthProvider, useAuth } from './contexts/AuthContext';
-import LoginPage from './pages/LoginPage';
-import RegisterPage from './pages/RegisterPage';
-import Dashboard from './pages/Dashboard';
-import ParentDashboard from './pages/ParentDashboard';
-import Navbar from './components/Navbar';
+import { AuthProvider, useAuth } from './contexts/AuthContext.jsx';
+import LoginPage from './pages/LoginPage.jsx';
+import RegisterPage from './pages/RegisterPage.jsx';
+import Dashboard from './pages/Dashboard.jsx';
+import ParentDashboard from './pages/ParentDashboard.jsx';
+import Navbar from './components/Navbar.jsx';
 import './App.css';
 
 function ProtectedRoute({ children }) {

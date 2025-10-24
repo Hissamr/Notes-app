@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { foldersAPI } from '../services/api';
+import { foldersAPI } from '../services/api.jsx';
 import './FoldersList.css';
 
 function FoldersList({ folders, selectedFolder, onFolderSelect, onFoldersChanged }) {
