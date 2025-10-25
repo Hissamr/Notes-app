@@ -16,6 +16,14 @@ export function AuthProvider({ children }) {
     if (token) {
       api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
       fetchUserProfile();
+      
+      // Set a timeout to prevent infinite loading if API is unreachable
+      const timeout = setTimeout(() => {
+        console.warn('Auth check timed out after 10 seconds');
+        setLoading(false);
+      }, 10000);
+      
+      return () => clearTimeout(timeout);
     } else {
       setLoading(false);
     }
@@ -92,7 +100,19 @@ export function AuthProvider({ children }) {
 
   return (
     <AuthContext.Provider value={value}>
-      {!loading && children}
+      {loading ? (
+        <div style={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          height: '100vh',
+          fontSize: '1.5rem'
+        }}>
+          Loading...
+        </div>
+      ) : (
+        children
+      )}
     </AuthContext.Provider>
   );
 }
