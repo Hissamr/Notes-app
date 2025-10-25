@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useAuth } from '../contexts/AuthContext.jsx';
 import { Navigate } from 'react-router-dom';
 import { authAPI, notesAPI } from '../services/api.jsx';
@@ -13,13 +13,14 @@ function ParentDashboard() {
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState('');
 
+  // Always call hooks in the same order — move effects above any early returns
+  useEffect(() => {
+    fetchLinkedChildren();
+  }, []);
+
   if (user && user.role === 'CHILD') {
     return <Navigate to="/dashboard" />;
   }
-
-  React.useEffect(() => {
-    fetchLinkedChildren();
-  }, []);
 
   const fetchLinkedChildren = async () => {
     setLoading(true);

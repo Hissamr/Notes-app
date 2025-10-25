@@ -1,7 +1,34 @@
 import axios from 'axios';
 
+// Resolve API base URL in a robust way so the code works both in Vite and
+// non-Vite (webpack/dev-server) environments where `import.meta.env` may not
+// be available at runtime. Try Vite's import.meta.env first, then fall back to
+// common environment vars exposed by other setups, finally default to localhost.
+const getApiBaseUrl = () => {
+  // Try Vite's import.meta.env (use typeof to avoid reference errors)
+  try {
+    if (typeof import.meta !== 'undefined' && import.meta.env && import.meta.env.VITE_API_URL) {
+      return import.meta.env.VITE_API_URL;
+    }
+  } catch (e) {
+    // import.meta may not be supported in some bundlers/environments; ignore
+  }
+
+  // Fall back to process.env variables commonly used in CRA/webpack setups
+  // Use typeof to avoid "process is not defined" errors in browser environments
+  if (typeof process !== 'undefined' && process.env) {
+    const envUrl = process.env.REACT_APP_VITE_API_URL || 
+                   process.env.VITE_API_URL || 
+                   process.env.REACT_APP_API_URL;
+    if (envUrl) return envUrl;
+  }
+
+  // Final default
+  return 'http://localhost:8080/api';
+};
+
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || 'http://localhost:8080/api',
+  baseURL: getApiBaseUrl(),
 });
 
 // Add request interceptor for debugging
