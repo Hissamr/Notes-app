@@ -21,5 +21,9 @@ body {
 
 .main-content {
   flex: 1;
+}
+
+/* Add padding only for pages that need it (not home page) */
+.main-content > :not(.home-page) {
   padding: 20px;
 }
