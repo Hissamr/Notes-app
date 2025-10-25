@@ -51,4 +51,20 @@ public class AuthController {
         java.util.List<ChildResponse> children = authService.getLinkedChildren(authentication.getName());
         return ResponseEntity.ok(children);
     }
+    
+    @PostMapping("/forgot-password")
+    public ResponseEntity<Map<String, String>> forgotPassword(@Valid @RequestBody ForgotPasswordRequest request) {
+        authService.forgotPassword(request.getEmail());
+        Map<String, String> response = new HashMap<>();
+        response.put("message", "If an account exists with this email, a password reset link has been sent");
+        return ResponseEntity.ok(response);
+    }
+    
+    @PostMapping("/reset-password")
+    public ResponseEntity<Map<String, String>> resetPassword(@Valid @RequestBody ResetPasswordRequest request) {
+        authService.resetPassword(request.getToken(), request.getNewPassword());
+        Map<String, String> response = new HashMap<>();
+        response.put("message", "Password has been reset successfully");
+        return ResponseEntity.ok(response);
+    }
 }
