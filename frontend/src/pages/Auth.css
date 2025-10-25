@@ -21,6 +21,14 @@
   color: #333;
 }
 
+.auth-description {
+  text-align: center;
+  color: #6b7280;
+  font-size: 0.875rem;
+  margin-bottom: 1.5rem;
+  line-height: 1.5;
+}
+
 .form-group {
   margin-bottom: 1rem;
 }
@@ -78,6 +86,15 @@ button[type="submit"]:disabled {
   font-size: 0.9rem;
 }
 
+.success-message {
+  background: #f0fdf4;
+  color: #16a34a;
+  padding: 0.75rem;
+  border-radius: 5px;
+  margin: 1rem 0;
+  font-size: 0.9rem;
+}
+
 .auth-card p {
   text-align: center;
   margin-top: 1rem;
@@ -92,4 +109,11 @@ button[type="submit"]:disabled {
 
 .auth-card a:hover {
   text-decoration: underline;
+}
+
+.auth-links {
+  text-align: center;
+  margin-top: 1rem;
+  color: #666;
+  font-size: 0.875rem;
 }

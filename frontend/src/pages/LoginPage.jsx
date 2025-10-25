@@ -59,6 +59,9 @@ function LoginPage() {
             {loading ? 'Logging in...' : 'Login'}
           </button>
         </form>
+        <p className="auth-links">
+          <Link to="/forgot-password">Forgot Password?</Link>
+        </p>
         <p>
           Don't have an account? <Link to="/register">Register here</Link>
         </p>

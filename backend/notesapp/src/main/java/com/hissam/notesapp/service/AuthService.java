@@ -17,6 +17,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
+import java.util.UUID;
+
 @Service
 @RequiredArgsConstructor
 public class AuthService {
@@ -119,6 +122,42 @@ public class AuthService {
                 .stream()
                 .map(this::mapToChildResponse)
                 .collect(java.util.stream.Collectors.toList());
+    }
+    
+    @Transactional
+    public void forgotPassword(String email) {
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new ResourceNotFoundException("User with this email not found"));
+        
+        // Generate reset token
+        String resetToken = UUID.randomUUID().toString();
+        user.setResetToken(resetToken);
+        user.setResetTokenExpiry(LocalDateTime.now().plusHours(1)); // Token valid for 1 hour
+        
+        userRepository.save(user);
+        
+        // In a real application, you would send an email here with the reset link
+        // For now, we'll just log it or return it
+        System.out.println("Password reset token for " + email + ": " + resetToken);
+        System.out.println("Reset link: http://localhost:3000/reset-password?token=" + resetToken);
+    }
+    
+    @Transactional
+    public void resetPassword(String token, String newPassword) {
+        User user = userRepository.findByResetToken(token)
+                .orElseThrow(() -> new ResourceNotFoundException("Invalid or expired reset token"));
+        
+        // Check if token is expired
+        if (user.getResetTokenExpiry() == null || user.getResetTokenExpiry().isBefore(LocalDateTime.now())) {
+            throw new RuntimeException("Reset token has expired");
+        }
+        
+        // Update password
+        user.setPassword(passwordEncoder.encode(newPassword));
+        user.setResetToken(null);
+        user.setResetTokenExpiry(null);
+        
+        userRepository.save(user);
     }
     
     private UserResponse mapToUserResponse(User user) {

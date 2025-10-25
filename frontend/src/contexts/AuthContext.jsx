@@ -65,9 +65,34 @@ export function AuthProvider({ children }) {
       return { success: true };
     } catch (error) {
       console.error('Login error:', error);
+      
+      // Handle specific error cases
+      let errorMessage = 'Login failed';
+      
+      if (error.response) {
+        const status = error.response.status;
+        const data = error.response.data;
+        
+        if (status === 401) {
+          errorMessage = 'Invalid username or password. Please try again.';
+        } else if (status === 403) {
+          errorMessage = 'Access denied. Please contact support.';
+        } else if (status === 404) {
+          errorMessage = 'Account not found. Please check your username.';
+        } else if (status === 500) {
+          errorMessage = 'Server error. Please try again later.';
+        } else if (data?.detail) {
+          errorMessage = data.detail;
+        } else if (data?.message) {
+          errorMessage = data.message;
+        }
+      } else if (error.message) {
+        errorMessage = error.message;
+      }
+      
       return {
         success: false,
-        error: error.response?.data?.detail || error.message || 'Login failed'
+        error: errorMessage
       };
     }
   };
@@ -77,9 +102,33 @@ export function AuthProvider({ children }) {
       await api.post('/auth/register', userData);
       return { success: true };
     } catch (error) {
+      console.error('Registration error:', error);
+      
+      // Handle specific error cases
+      let errorMessage = 'Registration failed';
+      
+      if (error.response) {
+        const status = error.response.status;
+        const data = error.response.data;
+        
+        if (status === 400) {
+          errorMessage = data?.message || 'Invalid registration data. Please check your information.';
+        } else if (status === 409) {
+          errorMessage = 'Username or email already exists. Please try another.';
+        } else if (status === 500) {
+          errorMessage = 'Server error. Please try again later.';
+        } else if (data?.detail) {
+          errorMessage = data.detail;
+        } else if (data?.message) {
+          errorMessage = data.message;
+        }
+      } else if (error.message) {
+        errorMessage = error.message;
+      }
+      
       return {
         success: false,
-        error: error.response?.data?.detail || 'Registration failed'
+        error: errorMessage
       };
     }
   };

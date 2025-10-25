@@ -83,7 +83,9 @@ export const authAPI = {
   register: (userData) => api.post('/auth/register', userData),
   getMe: () => api.get('/auth/me'),
   linkChild: (childUsername) => api.post('/auth/link-child', { childUsername: childUsername }),
-  getLinkedChildren: () => api.get('/auth/children')
+  getLinkedChildren: () => api.get('/auth/children'),
+  forgotPassword: (email) => api.post('/auth/forgot-password', { email }),
+  resetPassword: (token, newPassword) => api.post('/auth/reset-password', { token, newPassword })
 };
 
 export default api;
