@@ -9,26 +9,37 @@ function Navbar() {
 
   const handleLogout = () => {
     logout();
-    navigate('/login');
+    navigate('/');
   };
-
-  if (!user) return null;
 
   return (
     <nav className="navbar">
       <div className="navbar-brand">
-        <Link to="/dashboard">📝 Notes App</Link>
+        <Link to="/">📝 Notes App</Link>
       </div>
       <div className="navbar-menu">
-        <span className="user-info">
-          Welcome, {user.username} ({user.role})
-        </span>
-        {user.role === 'PARENT' && (
-          <Link to="/parent" className="nav-link">Parent Dashboard</Link>
+        {user ? (
+          <>
+            <span className="user-info">
+              Welcome, {user.username} ({user.role})
+            </span>
+            <Link to="/dashboard" className="nav-link">
+              {user.role === 'PARENT' ? 'Dashboard' : 'My Notes'}
+            </Link>
+            {user.role === 'PARENT' && (
+              <Link to="/parent" className="nav-link">Parent Dashboard</Link>
+            )}
+            <button onClick={handleLogout} className="logout-btn">
+              Logout
+            </button>
+          </>
+        ) : (
+          <>
+            <Link to="/" className="nav-link">Home</Link>
+            <Link to="/login" className="nav-link">Login</Link>
+            <Link to="/register" className="nav-link-signup">Sign Up</Link>
+          </>
         )}
-        <button onClick={handleLogout} className="logout-btn">
-          Logout
-        </button>
       </div>
     </nav>
   );

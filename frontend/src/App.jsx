@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider, useAuth } from './contexts/AuthContext.jsx';
+import HomePage from './pages/HomePage.jsx';
 import LoginPage from './pages/LoginPage.jsx';
 import RegisterPage from './pages/RegisterPage.jsx';
 import ForgotPasswordPage from './pages/ForgotPasswordPage.jsx';
@@ -23,6 +24,7 @@ function App() {
           <Navbar />
           <main className="main-content">
             <Routes>
+              <Route path="/" element={<HomePage />} />
               <Route path="/login" element={<LoginPage />} />
               <Route path="/register" element={<RegisterPage />} />
               <Route path="/forgot-password" element={<ForgotPasswordPage />} />
@@ -37,7 +39,6 @@ function App() {
                   <ParentDashboard />
                 </ProtectedRoute>
               } />
-              <Route path="/" element={<Navigate to="/dashboard" />} />
             </Routes>
           </main>
         </div>

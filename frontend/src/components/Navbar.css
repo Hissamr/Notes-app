@@ -42,6 +42,21 @@
   color: #1a1a1a;
 }
 
+.nav-link-signup {
+  background: #2563eb;
+  color: white;
+  text-decoration: none;
+  padding: 0.5rem 1.2rem;
+  border-radius: 6px;
+  transition: all 0.2s;
+  font-weight: 500;
+}
+
+.nav-link-signup:hover {
+  background: #1d4ed8;
+  transform: translateY(-1px);
+}
+
 .logout-btn {
   background: #1a1a1a;
   color: white;
