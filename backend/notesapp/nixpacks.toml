@@ -1,0 +1,8 @@
+[phases.setup]
+nixPkgs = ["maven", "jdk21"]
+
+[phases.build]
+cmds = ["chmod +x mvnw", "./mvnw clean package -DskipTests -Dmaven.test.skip=true"]
+
+[phases.start]
+cmd = "java -Dserver.port=$PORT -Dspring.profiles.active=prod -jar target/notesapp-0.0.1-SNAPSHOT.jar"
