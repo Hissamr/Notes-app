@@ -1,5 +1,6 @@
 package com.hissam.notesapp.config;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.cors.CorsConfiguration;
@@ -11,26 +12,29 @@ import java.util.Arrays;
 @Configuration
 public class CorsConfig {
 
+    @Value("${app.cors.allowed-origins}")
+    private String allowedOrigins;
+
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        
-        // Allow specific origins
-        configuration.setAllowedOrigins(Arrays.asList("http://localhost:3000"));
-        
+
+        // Allow specific origins from environment variable
+        configuration.setAllowedOrigins(Arrays.asList(allowedOrigins.split(",")));
+
         // Allow specific methods
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
-        
+
         // Allow all headers
         configuration.setAllowedHeaders(Arrays.asList("*"));
-        
+
         // Allow credentials
         configuration.setAllowCredentials(true);
-        
+
         // Apply this configuration to all paths
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
-        
+
         return source;
     }
 }
