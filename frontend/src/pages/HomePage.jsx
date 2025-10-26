@@ -167,6 +167,11 @@ function HomePage() {
           <div className="footer-section">
             <h4>Notes App</h4>
             <p>Smart note-taking for families</p>
+            <p className="github-link">
+              <a href="https://github.com/Hissamr/Notes-app" target="_blank" rel="noopener noreferrer">
+                ⭐ View Source on GitHub
+              </a>
+            </p>
           </div>
           <div className="footer-section">
             <h4>Quick Links</h4>
@@ -181,7 +186,7 @@ function HomePage() {
           </div>
         </div>
         <div className="footer-bottom">
-          <p>© 2025 Notes App. Built with ❤️ for families.</p>
+          <p>© 2025 Notes App. Built with ❤️ by <a href="https://github.com/Hissamr" target="_blank" rel="noopener noreferrer">Hissamr</a></p>
         </div>
       </footer>
     </div>
