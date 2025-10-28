@@ -27,8 +27,16 @@ const getApiBaseUrl = () => {
   return 'http://localhost:8080/api';
 };
 
+// Debug: Log the API URL being used
+const API_BASE_URL = getApiBaseUrl();
+console.log('🌐 API Base URL:', API_BASE_URL);
+console.log('📦 Environment Check:', {
+  'import.meta.env.VITE_API_URL': typeof import.meta !== 'undefined' ? import.meta.env?.VITE_API_URL : 'not available',
+  'process.env.REACT_APP_API_URL': typeof process !== 'undefined' ? process.env?.REACT_APP_API_URL : 'not available'
+});
+
 const api = axios.create({
-  baseURL: getApiBaseUrl(),
+  baseURL: API_BASE_URL,
 });
 
 // Add request interceptor for debugging
