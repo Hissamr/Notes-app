@@ -70,7 +70,6 @@ function NoteForm({ folders, editingNote, onNoteCreated, onNoteUpdated, onCancel
         setTimeout(() => onNoteCreated(), 500);
       }
     } catch (error) {
-      console.error('Failed to save note:', error);
       setError(error.response?.data?.message || 'Failed to save note. Please try again.');
     } finally {
       setLoading(false);

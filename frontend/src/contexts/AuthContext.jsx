@@ -19,7 +19,6 @@ export function AuthProvider({ children }) {
       
       // Set a timeout to prevent infinite loading if API is unreachable
       const timeout = setTimeout(() => {
-        console.warn('Auth check timed out after 10 seconds');
         setLoading(false);
       }, 10000);
       
@@ -31,14 +30,10 @@ export function AuthProvider({ children }) {
 
   const fetchUserProfile = async () => {
     try {
-      console.log('Fetching user profile with token:', api.defaults.headers.common['Authorization']);
       const response = await api.get('/auth/me');
-      console.log('User profile response:', response.data);
       setUser(response.data);
     } catch (error) {
-      console.error('Failed to fetch user profile:', error);
       if (error.response?.status === 401 || error.response?.status === 403) {
-        console.log('Token appears to be invalid, clearing auth data');
         localStorage.removeItem('token');
         delete api.defaults.headers.common['Authorization'];
       }
@@ -50,7 +45,6 @@ export function AuthProvider({ children }) {
   const login = async (username, password) => {
     try {
       const response = await api.post('/auth/login', { username, password });
-      console.log('Login response:', response.data);
       const { accessToken } = response.data;
       
       if (!accessToken) {
@@ -59,12 +53,10 @@ export function AuthProvider({ children }) {
       
       localStorage.setItem('token', accessToken);
       api.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
-      console.log('Token set in header:', `Bearer ${accessToken}`);
       
       await fetchUserProfile();
       return { success: true };
     } catch (error) {
-      console.error('Login error:', error);
       
       // Handle specific error cases
       let errorMessage = 'Login failed';
@@ -102,8 +94,6 @@ export function AuthProvider({ children }) {
       await api.post('/auth/register', userData);
       return { success: true };
     } catch (error) {
-      console.error('Registration error:', error);
-      
       // Handle specific error cases
       let errorMessage = 'Registration failed';
       

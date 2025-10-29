@@ -22,7 +22,6 @@ function NoteItem({ note, onEdit, onDeleted }) {
       await notesAPI.updateNote(note.id, updatedNote);
       setIsCompleted(!isCompleted);
     } catch (error) {
-      console.error('Failed to update note:', error);
       alert('Failed to update note');
     } finally {
       setLoading(false);
@@ -35,7 +34,6 @@ function NoteItem({ note, onEdit, onDeleted }) {
         await notesAPI.deleteNote(note.id);
         onDeleted();
       } catch (error) {
-        console.error('Failed to delete note:', error);
         alert('Failed to delete note');
       }
     }

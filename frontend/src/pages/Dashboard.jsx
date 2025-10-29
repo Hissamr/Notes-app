@@ -34,7 +34,7 @@ function Dashboard() {
       const response = await notesAPI.getNotes();
       setNotes(response.data);
     } catch (error) {
-      console.error('Failed to fetch notes:', error);
+      // Silently handle error
     } finally {
       setLoading(false);
     }
@@ -45,7 +45,7 @@ function Dashboard() {
       const response = await foldersAPI.getFolders();
       setFolders(response.data);
     } catch (error) {
-      console.error('Failed to fetch folders:', error);
+      // Silently handle error
     }
   };
 

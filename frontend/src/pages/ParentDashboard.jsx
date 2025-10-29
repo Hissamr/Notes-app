@@ -44,7 +44,6 @@ function ParentDashboard() {
       setChildrenNotes(notesMap);
     } catch (error) {
       setError('Failed to fetch linked children');
-      console.error('Failed to fetch linked children:', error);
     } finally {
       setLoading(false);
     }

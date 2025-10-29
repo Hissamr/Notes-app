@@ -28,7 +28,6 @@ function FoldersList({ folders, selectedFolder, onFolderSelect, onFoldersChanged
       setError('');
       onFoldersChanged();
     } catch (error) {
-      console.error('Failed to create folder:', error);
       setError(error.response?.data?.message || 'Failed to create folder');
     } finally {
       setLoading(false);
@@ -49,7 +48,6 @@ function FoldersList({ folders, selectedFolder, onFolderSelect, onFoldersChanged
       setError('');
       onFoldersChanged();
     } catch (error) {
-      console.error('Failed to update folder:', error);
       setError(error.response?.data?.message || 'Failed to update folder');
     } finally {
       setLoading(false);
@@ -66,7 +64,6 @@ function FoldersList({ folders, selectedFolder, onFolderSelect, onFoldersChanged
         setError('');
         onFoldersChanged();
       } catch (error) {
-        console.error('Failed to delete folder:', error);
         setError(error.response?.data?.message || 'Failed to delete folder');
       }
     }
