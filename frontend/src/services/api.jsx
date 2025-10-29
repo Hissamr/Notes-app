@@ -1,50 +1,11 @@
 import axios from 'axios';
 
-// For Create React App, environment variables MUST start with REACT_APP_
-// They are embedded at BUILD TIME, not runtime
+// API base URL from environment variables
 const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:8080/api';
-
-// Debug: Log the API URL being used
-console.log('🌐 API Base URL:', API_BASE_URL);
-console.log('📦 Environment:', process.env.NODE_ENV);
-console.log('🔧 REACT_APP_API_URL:', process.env.REACT_APP_API_URL);
 
 const api = axios.create({
   baseURL: API_BASE_URL,
 });
-
-// Add request interceptor for debugging
-api.interceptors.request.use(request => {
-  console.log('Making API request:', {
-    method: request.method,
-    url: request.url,
-    baseURL: request.baseURL,
-    fullURL: `${request.baseURL}${request.url}`,
-    headers: request.headers,
-  });
-  return request;
-});
-
-// Add response interceptor for debugging
-api.interceptors.response.use(
-  response => {
-    console.log('API response success:', {
-      status: response.status,
-      url: response.config.url,
-    });
-    return response;
-  },
-  error => {
-    console.error('API error:', {
-      status: error.response?.status,
-      url: error.config?.url,
-      baseURL: error.config?.baseURL,
-      message: error.message,
-      data: error.response?.data
-    });
-    return Promise.reject(error);
-  }
-);
 
 export const notesAPI = {
   getNotes: () => api.get('/notes'),
