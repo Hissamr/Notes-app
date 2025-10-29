@@ -1,39 +1,13 @@
 import axios from 'axios';
 
-// Resolve API base URL in a robust way so the code works both in Vite and
-// non-Vite (webpack/dev-server) environments where `import.meta.env` may not
-// be available at runtime. Try Vite's import.meta.env first, then fall back to
-// common environment vars exposed by other setups, finally default to localhost.
-const getApiBaseUrl = () => {
-  // Try Vite's import.meta.env (use typeof to avoid reference errors)
-  try {
-    if (typeof import.meta !== 'undefined' && import.meta.env && import.meta.env.VITE_API_URL) {
-      return import.meta.env.VITE_API_URL;
-    }
-  } catch (e) {
-    // import.meta may not be supported in some bundlers/environments; ignore
-  }
-
-  // Fall back to process.env variables commonly used in CRA/webpack setups
-  // Use typeof to avoid "process is not defined" errors in browser environments
-  if (typeof process !== 'undefined' && process.env) {
-    const envUrl = process.env.REACT_APP_VITE_API_URL || 
-                   process.env.VITE_API_URL || 
-                   process.env.REACT_APP_API_URL;
-    if (envUrl) return envUrl;
-  }
-
-  // Final default
-  return 'http://localhost:8080/api';
-};
+// For Create React App, environment variables MUST start with REACT_APP_
+// They are embedded at BUILD TIME, not runtime
+const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:8080/api';
 
 // Debug: Log the API URL being used
-const API_BASE_URL = getApiBaseUrl();
 console.log('🌐 API Base URL:', API_BASE_URL);
-console.log('📦 Environment Check:', {
-  'import.meta.env.VITE_API_URL': typeof import.meta !== 'undefined' ? import.meta.env?.VITE_API_URL : 'not available',
-  'process.env.REACT_APP_API_URL': typeof process !== 'undefined' ? process.env?.REACT_APP_API_URL : 'not available'
-});
+console.log('📦 Environment:', process.env.NODE_ENV);
+console.log('🔧 REACT_APP_API_URL:', process.env.REACT_APP_API_URL);
 
 const api = axios.create({
   baseURL: API_BASE_URL,
@@ -44,8 +18,9 @@ api.interceptors.request.use(request => {
   console.log('Making API request:', {
     method: request.method,
     url: request.url,
+    baseURL: request.baseURL,
+    fullURL: `${request.baseURL}${request.url}`,
     headers: request.headers,
-    data: request.data
   });
   return request;
 });
@@ -53,10 +28,9 @@ api.interceptors.request.use(request => {
 // Add response interceptor for debugging
 api.interceptors.response.use(
   response => {
-    console.log('API response:', {
+    console.log('API response success:', {
       status: response.status,
       url: response.config.url,
-      data: response.data
     });
     return response;
   },
@@ -64,6 +38,7 @@ api.interceptors.response.use(
     console.error('API error:', {
       status: error.response?.status,
       url: error.config?.url,
+      baseURL: error.config?.baseURL,
       message: error.message,
       data: error.response?.data
     });
